@@ -1,73 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Full screen button</title>
-</head>
-<style>
-	*{	font-family: sans-serif; }
-	body{ background-color: #ffe5e5; }
-	@keyframes fill{
-		from{
-			left:200px;
-			top:225px;
-		}
-		to{
-			left:-100px;
-			top:-100px;
-			width: 700px;
-			height: 700px;
-			border-radius: 300px;
-		}
-	}
-	#main{
-		width: 500px;
-		height: 500px;
-		margin: 25px auto;
-		background-color: #fff;
-		border-radius: 15px;
-		overflow: hidden;
-	}
-	.button{
-		position: relative;
-		top:225px;
-		left:200px;
-		width:100px;
-		height: 50px;
-		font-size: 30px;
-		border-radius: 15px;
-		border:none;
-		font-weight: bold;
-		background-color: #ffaeae;
-		color: #aa3232;
-		outline: none;
-
-		transition: 0.5s;
-	}
-	.clicked{
-		width:1000px;
-		height:1000px;
-		top:-250px;
-		left:-250px;
-		border-radius: 500px;
-	}
-</style>
-<body>
-	<div id="main">
-		<button id="button" class="button not-clicked">GO</button>
-	</div>
-	<script type="text/javascript">
-		var button = document.getElementById("button");
-
-		button.addEventListener("click",(event)=>{
-			let target = event.target,
-				state = target.classList.contains("not-clicked");
-
-			if(state){
-				target.classList.replace("not-clicked","clicked");
-			}else{
-				target.classList.replace("clicked","not-clicked");
-			}
-		});
-	</script>
-</body>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Hello)</title>
+        <meta name="description" content="Nikita Sirotkin | About">
+        <link rel="stylesheet" href="./style.css"/>
+    </head> 
+    <body>
+        <script src="./script.js"></script>
+    </body>
 </html>
