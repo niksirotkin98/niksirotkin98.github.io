@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>block</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .c1{
+            position: absolute;
+            z-index: 10;
+            top:0;
+            left:0;
+            bottom: 0;
+            right: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .c2{
+            z-index: 1;
+            top:50%;
+            left:50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .c3{
+            transform: rotate3d(0, 1, 0, 0deg);
+            transition: 0.25s;
+            clip-path: circle(70%);
+        }
+
+        .right{
+            transform: rotate3d(0, 1, 0, 20deg);
+        }
+        .left{
+            transform: rotate3d(0, 1, 0, -20deg);
+        }
+        .up{
+            transform: rotate3d(1, 1, 0, 20deg);
+        }
+        .down{
+            transform: rotate3d(1, 0, 0, 20deg);
+        }
+        
+        .c4{
+            width:250px;
+            height:250px;
+            background-color: rgb(10, 187, 119);
+            clip-path: inset(0 0);
+        }
+
+        .c5{
+            width:250px;
+            height:250px;
+            margin-top: 0px;
+            transition: 0.25s;
+        }
+
+        .c2:hover .c5{
+            margin-top:250px;
+        }
+    </style>
+    <script>
+        /**
+        {+,-}|{+,+}
+        -----+-----
+        {-,-}|{-,+}
+        */
+        let sqr2 = 2**0.5;
+
+        function getSign(number){
+            return number > 0? 1 : (number < 0? -1: 0);
+        }
+
+        function mod(number){
+            return number > 0? number : -number;
+        }
+
+        function mouseCheck(event){
+            let container = document.getElementById("container"),
+                c3 = container.querySelector('.c3'),
+                {clientX: x, clientY: y} = event,
+                {offsetWidth: x0, offsetHeight: y0} = container,
+                dx, dy, zx, zy, mx, my, sx, sy, d, ang;
+
+            x0 /= 2; y0 /= 2;
+            dx = (x - x0)/x0; dy = (y0 - y)/y0;
+            zx = getSign(dx); zy = getSign(dy);
+            mx = mod(dx); my = mod(dy); 
+            sx = zy*my; sy = zx*mx;
+            d = (dx**2 + dy**2)**0.5;
+            ang = Math.round(90*(d/sqr2));
+
+            c3.style.setProperty("transform", `rotate3d(${sx},${sy},0,${ang}deg)`)
+
+            //console.log(d.toFixed(3), d<sqr2);
+        }
+
+        function keyCheck(event){
+            let element = document.querySelector('.c3');
+            console.log(element,event.key);
+            switch(event.key){
+                case '8':
+                    element.classList.remove("up","left","down","right");
+                    element.classList.add("up");
+                    break;
+                case '2':
+                    element.classList.remove("up","left","down","right");
+                    element.classList.add("down");
+                    break;
+                case '4':
+                    element.classList.remove("up","left","down","right");
+                    element.classList.add("left");
+                    break;
+                case '6':
+                    element.classList.remove("up","left","down","right");
+                    element.classList.add("right");
+                    break;
+            }
+        }
+
+        function init(){
+            let c1 = document.querySelector("#container");
+            c1.addEventListener("mousemove", mouseCheck);
+            //document.addEventListener("keypress", keyCheck);
+        }
+
+    </script>
+</head>
+<body onload="init()">
+    <div class="c1" id="container">
+        <div class="c2">
+            <div class="c3">
+                <div class="c4">
+                    <img class="c5" src="avatar.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
