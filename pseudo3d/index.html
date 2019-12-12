@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>block</title>
+    <title>Pseudo3d</title>
     <style>
         *{
             box-sizing: border-box;
@@ -19,7 +19,6 @@
             width: 100vw;
             overflow: hidden;
         }
-
         .c2{
             z-index: 1;
             top:50%;
@@ -29,42 +28,29 @@
             perspective: 1000px;
             transform-style: preserve-3d;
         }
-
         .c3{
             transform: rotate3d(0, 1, 0, 0deg);
             transition: 0.25s;
             clip-path: circle(70%);
         }
-
-        .right{
-            transform: rotate3d(0, 1, 0, 20deg);
-        }
-        .left{
-            transform: rotate3d(0, 1, 0, -20deg);
-        }
-        .up{
-            transform: rotate3d(1, 1, 0, 20deg);
-        }
-        .down{
-            transform: rotate3d(1, 0, 0, 20deg);
-        }
-        
         .c4{
             width:250px;
             height:250px;
-            background-color: rgb(10, 187, 119);
+            background-color: rgb(74, 213, 255);
             clip-path: inset(0 0);
+            transition: 0.3s;
         }
-
         .c5{
             width:250px;
             height:250px;
             margin-top: 0px;
             transition: 0.25s;
         }
-
         .c2:hover .c5{
             margin-top:250px;
+        }
+        .c2:hover .c4{
+            background-color: rgb(255, 184, 102);
         }
     </style>
     <script>
@@ -99,37 +85,11 @@
             ang = Math.round(90*(d/sqr2));
 
             c3.style.setProperty("transform", `rotate3d(${sx},${sy},0,${ang}deg)`)
-
-            //console.log(d.toFixed(3), d<sqr2);
-        }
-
-        function keyCheck(event){
-            let element = document.querySelector('.c3');
-            console.log(element,event.key);
-            switch(event.key){
-                case '8':
-                    element.classList.remove("up","left","down","right");
-                    element.classList.add("up");
-                    break;
-                case '2':
-                    element.classList.remove("up","left","down","right");
-                    element.classList.add("down");
-                    break;
-                case '4':
-                    element.classList.remove("up","left","down","right");
-                    element.classList.add("left");
-                    break;
-                case '6':
-                    element.classList.remove("up","left","down","right");
-                    element.classList.add("right");
-                    break;
-            }
         }
 
         function init(){
             let c1 = document.querySelector("#container");
             c1.addEventListener("mousemove", mouseCheck);
-            //document.addEventListener("keypress", keyCheck);
         }
 
     </script>
