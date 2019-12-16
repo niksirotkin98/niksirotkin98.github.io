@@ -116,6 +116,7 @@
                 this.onmousemove = this.onmousemove.bind(this);
                 this.onmouseclick = this.onmouseclick.bind(this);
                 this.container.addEventListener("mousemove", this.onmousemove);
+                this.container.addEventListener("touchmove", this.onmousemove);
                 this.container.addEventListener("click", this.onmouseclick);
             }
             addElement(x, y, innerHTML){
