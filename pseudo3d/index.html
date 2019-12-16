@@ -114,9 +114,10 @@
 
             init(){
                 this.onmousemove = this.onmousemove.bind(this);
+                this.ontouchmove = this.ontouchmove.bind(this);
                 this.onmouseclick = this.onmouseclick.bind(this);
                 this.container.addEventListener("mousemove", this.onmousemove);
-                this.container.addEventListener("touchmove", this.onmousemove);
+                this.container.addEventListener("touchmove", this.ontouchmove);
                 this.container.addEventListener("click", this.onmouseclick);
             }
             addElement(x, y, innerHTML){
@@ -138,6 +139,9 @@
                 this.objects.push(element);
 
                 return this;
+            }
+            ontouchmove(event){
+                this.onmousemove(event.touches[0]);
             }
             onmouseclick(event){
                 this.addElement(event.clientX +"px", event.clientY+"px",
