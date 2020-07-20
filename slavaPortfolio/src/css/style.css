@@ -94,6 +94,8 @@ div.sort button{
     width: 190px;
     height: 50px;
     padding: 0 25px;
+
+    outline: none;
 }
 
 div.sort button span{
@@ -103,23 +105,59 @@ div.sort button span{
     line-height: 176%;  
 }
 
-div.grid{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-}
-
-article.item{
-    margin-top: 50px;
-    width: 470px;
-    height: 353px;
-    background-image: url("../images/articles/unnamed_1.png");
+ul.sortList{
+    display: none;
+    position: absolute;
+    margin-top: 110px;
+    margin-left: -25px;
+    padding: 15px 25px;
+    width: 190px;
+    list-style: none;
+    background: white;
+    z-index: 999;
+    border: 1px solid #F5F5F5;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    overflow: hidden;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 221.5%;
+    text-align: left;
 }
 
-article.item div.hover{
+div.sort ul.opened{
+    display: initial;
+}
+
+ol.grid{
+    margin: 75px 0;
+    display: grid;
+    align-self: flex-end;
+    width: 100%;
+    list-style: none;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-gap: 36px;
+}
+
+li.item{
+    overflow: hidden;
+    padding-bottom: 75%;
+    height: 0;
+    position: relative;
+    border-radius: 10px;
+}
+
+li.item img{
+    width: 100%;
+}
+
+li.item div.hover{
     display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     justify-content: space-between;
     height: calc(100% - 90px);
     padding: 45px 50px;
@@ -129,7 +167,7 @@ article.item div.hover{
     transition-duration: 0.25s;
 }
 
-article.item:hover div.hover{
+li.item:hover div.hover{
     opacity: 1;
 }
 
