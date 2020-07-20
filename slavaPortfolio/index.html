@@ -25,70 +25,97 @@
                 <img class="logos" src="./src/images/logo-behance.svg">
                 <img class="logos" src="./src/images/logo-dribbble.svg"> 
             </div>
-            <div class="sort"><button><span>E-Commerce</span><img src="./src/images/arrow-down.svg"></button></div>
-            <div class="grid">
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
-                <article class="item">
-                    <div class="hover">
-                        <span class="headline">Jewelry Online Store</span>
-                        <span class="tags">UI / Visual Design, UX Design</span>
-                    </div>
-                </article>
+            <div class="sort">
+                <button onclick="openFilter(this)">
+                    <span>E-Commerce</span>
+                    <ul class="sortList">
+                        <li onclick="changeFilter(this.innerText)">E-Commerce</li>
+                        <li onclick="changeFilter(this.innerText)">Illustration</li>
+                        <li onclick="changeFilter(this.innerText)">Other</li>
+                    </ul>
+                    <img src="./src/images/arrow-down.svg">
+                </button>
             </div>
-            <div class="backToTop">
+            <ol class="grid">
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="./src/images/articles/unnamed_1.png">
+                    <div class="hover">
+                        <span class="headline">Jewelry Online Store</span>
+                        <span class="tags">UI / Visual Design, UX Design</span>
+                    </div>
+                </li>
+            </ol>
+            <div class="backToTop" onclick="window.scrollTo(0,0)">
                 <span>↑ Back to Top</span>
             </div>
         </main>
@@ -108,5 +135,13 @@
             }
         }
         checkJSON();
+        function openFilter(value){
+            document.querySelector("ul.sortList").classList.toggle("opened");
+            console.log(value);
+        }
+        function changeFilter(filterValue){
+            document.querySelector("div.sort > button > span").innerText = filterValue;
+            console.log(filterValue);
+        }
     </script>
 </html>
