@@ -309,7 +309,7 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/armor_online_store_1.jpg"
+                "./src/images/articles/armor_online_store.jpg"
             ],
             "customer":["BZ Defence", "United States"],
             "type":"ecommerce",
