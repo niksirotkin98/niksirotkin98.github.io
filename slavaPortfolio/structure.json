@@ -181,9 +181,9 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/jewelry_online_store_1.png",
-                "./src/images/articles/jewelry_online_store_2.png",
-                "./src/images/articles/jewelry_online_store_3.png"
+                "./src/images/articles/jewelry_online_store_1.jpg",
+                "./src/images/articles/jewelry_online_store_2.jpg",
+                "./src/images/articles/jewelry_online_store_3.jpg"
             ],
             "customer":["Label-D", "United Kingdom"],
             "type":"ecommerce",
@@ -200,8 +200,8 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/fashion_online_store_1.png",
-                "./src/images/articles/fashion_online_store_2.png"
+                "./src/images/articles/fashion_online_store_1.jpg",
+                "./src/images/articles/fashion_online_store_2.jpg"
             ],
             "customer":["Article&", "United States"],
             "type":"ecommerce",
@@ -220,9 +220,9 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/magento_2_theme_1.png",
-                "./src/images/articles/magento_2_theme_2.png",
-                "./src/images/articles/magento_2_theme_3.png"
+                "./src/images/articles/magento_2_theme_1.jpg",
+                "./src/images/articles/magento_2_theme_2.jpg",
+                "./src/images/articles/magento_2_theme_3.jpg"
             ],
             "customer":["BelVG", "Belarus"],
             "type":"ecommerce",
@@ -238,9 +238,9 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/cpap_masks_online_store_1.png",
-                "./src/images/articles/cpap_masks_online_store_2.png",
-                "./src/images/articles/cpap_masks_online_store_3.png"
+                "./src/images/articles/cpap_masks_online_store_1.jpg",
+                "./src/images/articles/cpap_masks_online_store_2.jpg",
+                "./src/images/articles/cpap_masks_online_store_3.jpg"
             ],
             "customer":["Respshop", "United States"],
             "type":"ecommerce",
@@ -256,10 +256,10 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/mother_slings_online_store_1.png",
-                "./src/images/articles/mother_slings_online_store_2.png",
-                "./src/images/articles/mother_slings_online_store_3.png",
-                "./src/images/articles/mother_slings_online_store_4.png"
+                "./src/images/articles/mother_slings_online_store_1.jpg",
+                "./src/images/articles/mother_slings_online_store_2.jpg",
+                "./src/images/articles/mother_slings_online_store_3.jpg",
+                "./src/images/articles/mother_slings_online_store_4.jpg"
             ],
             "customer":["Slingomama", "Netherlands"],
             "type":"ecommerce",
@@ -275,8 +275,8 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/magento_2_theme_2_1.png",
-                "./src/images/articles/magento_2_theme_2_2.png"
+                "./src/images/articles/magento_2_theme_2_1.jpg",
+                "./src/images/articles/magento_2_theme_2_2.jpg"
             ],
             "customer":["BelVG", "Belarus"],
             "type":"ecommerce",
@@ -292,8 +292,8 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/motor_oil_online_store_1.png",
-                "./src/images/articles/motor_oil_online_store_2.png"
+                "./src/images/articles/motor_oil_online_store_1.jpg",
+                "./src/images/articles/motor_oil_online_store_2.jpg"
             ],
             "customer":["Ato24", "Germany"],
             "type":"ecommerce",
@@ -309,7 +309,7 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/armor_online_store_1.png"
+                "./src/images/articles/armor_online_store_1.jpg"
             ],
             "customer":["BZ Defence", "United States"],
             "type":"ecommerce",
@@ -325,9 +325,9 @@
             "preview": 0,
             "default": 0,
             "images":[
-                "./src/images/articles/attenuator_devices_online_store_1.png",
-                "./src/images/articles/attenuator_devices_online_store_2.png",
-                "./src/images/articles/attenuator_devices_online_store_3.png"
+                "./src/images/articles/attenuator_devices_online_store_1.jpg",
+                "./src/images/articles/attenuator_devices_online_store_2.jpg",
+                "./src/images/articles/attenuator_devices_online_store_3.jpg"
             ],
             "customer":["Adaura Technologies", "United States"],
             "type":"ecommerce",
