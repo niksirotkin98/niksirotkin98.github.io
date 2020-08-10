@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <style>
+        </style>
+        <script src="https://maker.js.org/target/js/browser.maker.js" type="text/javascript"></script>
+        <script src="http://opentype.js.org/dist/opentype.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div id="render-text"></div>
+        
+        <script defer>
+            var makerjs = require('makerjs');
+
+            //load a font asynchronously
+            opentype.load('./Kanit-Bold.ttf', function (err, font) {
+
+                if (err) {
+                    document.getElementById('render-text').innerText = 'the font could not be loaded :(';
+                } else {
+
+                    var textModel = new makerjs.models.Text(font, 'Hello', 100);
+
+                    var svg = makerjs.exporter.toSVG(textModel);
+
+                    document.getElementById('render-text').innerHTML = svg;
+                }
+            });
+        </script>
+    </body>
+</html>
+
