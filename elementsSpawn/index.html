@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Elements s`pawn animation</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <style>
+            :root{
+                font-family: "Jost", sans-serif;
+            }
+
+            body{
+                --main-color: #12B8FF;
+                --background-color: #F0F0F0;
+                --main-text-color: #444444;
+                --inactive-color: rgba(0, 0, 0, 0.5);
+
+                background: var(--background-color, #f0f0f0);
+            }
+
+            *{  
+                color: var(--main-text-color, #444444);
+            }
+
+            .plug-holder{
+                position: absolute;
+                z-index: 999;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-color: var(--background-color, #F0F0F0);
+            }
+            .on-switch, .transition_0_5s{
+                transition-duration: 0.5s;
+            }
+            .plug{
+                position: absolute;
+                top: calc(50% - 25px);
+                left: calc(50% - 25px);
+                width: 50px;
+                height: 50px;
+                animation: plugElementsContainerAnimation ease-in 2s infinite normal forwards;
+            }
+            .plug > div{
+                transform: rotate(45deg);
+                position: absolute;
+                width: 50px;
+                height: 50px;
+            }
+            .plug > div.ver{
+                transform: rotate(135deg);
+            }
+            .plug > div > div{
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                width: 10px;
+                height: 10px;
+                background: var(--main-color, #12B8FF);
+                animation: plugElementsAnimation ease-in 2s infinite normal forwards;
+            }
+
+
+            @keyframes plugElementsAnimation{
+                0%{
+                    transform: scale(0,0);
+                }
+                10%{
+                    transform: scale(6,6);
+                }
+                15%{
+                    transform: scale(4,4);
+                }
+                20%{
+                    transform: scale(5.5,5.5);
+                }
+                25%{
+                    transform: scale(5,5);
+                }
+                40%{
+                    transform: scale(5, 5);
+                }
+                45%{
+                    transform: scale(5, 1);
+                }
+                70%{
+                    transform: scale(5, 1);
+                }
+                75%{
+                    transform: scale(1, 1);
+                }
+                79%{
+                    transform: scale(1, 1);
+                }
+                
+                80%{
+                    transform: scale(0,0);
+                }
+
+                82%{
+                    transform: scale(0.8,0.8);
+                }
+
+                87%{
+                    transform: scale(0,0);
+                }
+                100%{
+                    transform: scale(0,0);
+                }
+            }
+            
+            @keyframes plugElementsContainerAnimation{
+                0%{
+                    transform: rotate(0deg);
+                }
+                50%{
+                    transform: rotate(0deg);
+                }
+                55%{
+                    transform: rotate(90deg);
+                }
+                100%{
+                    transform: rotate(90deg);
+                }
+            }
+
+            @keyframes plugIntro{
+                0%{
+                    opacity: 0;
+                }
+                100%{
+                    opacity: 1;
+                }
+            }
+
+            .interface{
+                position: absolute;
+                z-index: 500;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+            .icon{
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+
+                position: relative;
+                width: 50px;
+                height: 50px;
+
+                border: none;
+                border-color: rgba(0,0,0,0);
+                background: none;
+                transition-duration: 0.15s;
+            }
+            .icon:hover{
+                border: 1px solid var(--main-color, #12B8FF);
+            }
+            .icon:hover > svg > path{
+                fill: var(--main-color, #12B8FF);
+                transition-duration: 0.15s;
+            }
+            .icon > input{
+                opacity: 0;
+                width: 0;
+                height: 0;
+                margin: 0;
+            }
+            .icon > svg {
+                width: 32px;
+                height: 32px;
+            }
+            .icon > svg > path{
+                fill: var(--inactive-color, rgba(0, 0, 0, 0.5));
+            }
+            .icon input ~ svg[data-option="false"]{
+                display:block;
+            }
+            .icon input ~ svg[data-option="true"]{
+                display:none;
+            }
+            .icon input:checked ~ svg[data-option="true"]{
+                display:block;
+            }
+            .icon input:checked ~ svg[data-option="false"]{
+                display:none;
+            }
+
+            #themeSwitcher{
+                position: absolute;
+                top: 100px;
+                left: 100px;
+            }
+            
+            .theme-indicator{
+                position: absolute;
+                top: calc(50% - 350px);
+                left: 0;
+                width: 350px;
+                height: 700px;
+                overflow: hidden;
+            }
+            .theme-indicator > .container{
+                position: absolute;
+                top: 0;
+                left: -350px;
+                width: 700px;
+                height: 700px;
+                transform: rotate(0deg);
+                transition-duration: 0.25s;
+                transition-timing-function: ease-out;
+            }
+            .theme-indicator > .container > svg{
+                position: absolute;
+                left: 0px;
+                top: 250px;
+                width: 200px;
+                height: 200px;
+                transform: rotate(180deg);
+            }
+            .theme-indicator > .container > svg#light{
+                left: 500px;
+            }
+            .theme-indicator > .container > svg#dark > path{
+                fill: #1D1D1D;
+            }
+            .theme-indicator > .container > svg#light > path{
+                fill: #F0F0F0;
+            }
+            .theme-indicator.dark > .container{
+                transform: rotate(180deg);
+            }
+
+            .content{
+                position: absolute;
+                top: 100px;
+                left: calc(50% - 250px);
+                width: 500px;
+                height: fit-content;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .content > .element:first-child{
+                margin-top: 0;
+            }
+
+            .element{
+                position: relative;
+                width: 100%;
+                height: fit-content;
+                margin: auto;
+                overflow: hidden;
+                flex: none;
+                order: 1;
+                flex-grow: 0;
+                margin-top: 50px;
+            }
+
+            .element > .slide{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: -100%;
+                left: 0;
+                background-color: var(--main-color, #12B8FF);
+                animation: spawn 0.25s ease-out 1 normal forwards;
+            }
+
+            .element.hidden > *:not(.slide){
+                opacity: 0;
+            }
+
+            .element > span, .element > p{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 170%;
+                margin: 0;
+            }
+
+            @keyframes spawn{
+                0%{
+                    top: -100%; left: 0;
+                }
+                50%{
+                    top: 0%; left: 0;
+                }
+                100%{
+                    top: 0%; left: 100%;
+                }
+            }
+        </style>
+        <script>
+            let colors = [
+                //default
+                {
+                    "caption" : "light",
+                    "main-color" : "#12B8FF",
+                    "background-color" : "#F0F0F0",
+                    "inactive-color" : "rgba(0, 0, 0, 0.5)",
+                    "main-text-color" : "#444444"
+                },
+                //dark
+                {
+                    "caption" : "dark",
+                    "main-color" : "#FF6712",
+                    "background-color" : "#1D1D1D",
+                    "inactive-color" : "rgba(255, 255, 255, 0.3)",
+                    "main-text-color" : "rgba(255, 255, 255, 0.9)"
+                }
+            ];
+            
+            function ChangeTheme(colorsObj, caption){
+                for(let property in colorsObj){
+                    document.body.style.setProperty("--"+property, colorsObj[property]);
+                }
+                saveTheme(caption || colorsObj.caption);
+            }
+
+            function saveTheme(caption){
+                if(localStorage){
+                    localStorage.setItem("theme", caption);
+                }
+            }
+
+            function CheckTheme(){
+                if(localStorage){
+                    let theme = localStorage.getItem("theme")
+                    if(theme && theme === "dark"){
+                        ChangeTheme(colors[1])
+                        try{
+                            document.querySelector(".theme-indicator").classList.add("dark");
+                            document.querySelector("#themeSwitcher > input").checked = true;
+                        }
+                        catch(e){
+                            console.log(e);
+                        }
+                    }else{
+                        saveTheme("light");
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body class="transition_0_5s" onload="CheckTheme()">
+        <div class="theme-indicator">
+            <div class="container">
+                <svg id="light" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" data-option="true"><path d="M11.5 1a.5.5 0 00-1 0v3a.5.5 0 001 0V1zM4.604 3.896a.5.5 0 10-.708.708l1.75 1.75a.5.5 0 10.708-.708l-1.75-1.75zM18.104 4.604a.5.5 0 00-.708-.708l-1.75 1.75a.5.5 0 00.708.708l1.75-1.75zM1 10.5a.5.5 0 000 1h3a.5.5 0 000-1H1zM18 10.5a.5.5 0 000 1h3a.5.5 0 000-1h-3zM4.604 18.104l1.75-1.75a.5.5 0 00-.708-.708l-1.75 1.75a.5.5 0 00.708.708zM18.104 17.396l-1.75-1.75a.5.5 0 00-.708.708l1.75 1.75a.5.5 0 00.708-.708zM11.5 18a.5.5 0 00-1 0v3a.5.5 0 001 0v-3zM11 16a5 5 0 100-10 5 5 0 000 10z" fill="#000"/></svg>
+                <svg id="dark" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" data-option="false"><path d="M7.794 12.16a.39.39 0 00.46-.069A3.986 3.986 0 0111 11.001c.75 0 1.453.206 2.053.565.192.115.438.117.604-.034a5 5 0 00-1.69-8.415c-.411-.146-.717.333-.545.734a4.992 4.992 0 01-.262 4.48 4.993 4.993 0 01-3.748 2.466c-.433.05-.695.555-.363.838.228.194.477.37.745.525z" fill="#000"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5 17.5a2.5 2.5 0 013-2.45V15a2.998 2.998 0 013-3 3 3 0 012.895 2.21A2.978 2.978 0 0115 14a3 3 0 110 6H4.5a.5.5 0 010-1h1a2.489 2.489 0 01-.5-1.5zM6.5 19a1 1 0 00-.2-.6 1.5 1.5 0 011.502-2.37A1 1 0 009 15.034V15a2 2 0 013.93-.527 1 1 0 001.334.667A2 2 0 1115 19H6.5z" fill="#000"/></svg>
+            </div>
+        </div>
+        <div class="content">
+        </div>
+
+        <div class="interface">
+            <label class="switcher icon" id="themeSwitcher">
+                <input type="checkbox">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" data-option="true"><path d="M11.5 1a.5.5 0 00-1 0v3a.5.5 0 001 0V1zM4.604 3.896a.5.5 0 10-.708.708l1.75 1.75a.5.5 0 10.708-.708l-1.75-1.75zM18.104 4.604a.5.5 0 00-.708-.708l-1.75 1.75a.5.5 0 00.708.708l1.75-1.75zM1 10.5a.5.5 0 000 1h3a.5.5 0 000-1H1zM18 10.5a.5.5 0 000 1h3a.5.5 0 000-1h-3zM4.604 18.104l1.75-1.75a.5.5 0 00-.708-.708l-1.75 1.75a.5.5 0 00.708.708zM18.104 17.396l-1.75-1.75a.5.5 0 00-.708.708l1.75 1.75a.5.5 0 00.708-.708zM11.5 18a.5.5 0 00-1 0v3a.5.5 0 001 0v-3zM11 16a5 5 0 100-10 5 5 0 000 10z" fill="#000"/></svg>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" data-option="false"><path d="M7.794 12.16a.39.39 0 00.46-.069A3.986 3.986 0 0111 11.001c.75 0 1.453.206 2.053.565.192.115.438.117.604-.034a5 5 0 00-1.69-8.415c-.411-.146-.717.333-.545.734a4.992 4.992 0 01-.262 4.48 4.993 4.993 0 01-3.748 2.466c-.433.05-.695.555-.363.838.228.194.477.37.745.525z" fill="#000"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5 17.5a2.5 2.5 0 013-2.45V15a2.998 2.998 0 013-3 3 3 0 012.895 2.21A2.978 2.978 0 0115 14a3 3 0 110 6H4.5a.5.5 0 010-1h1a2.489 2.489 0 01-.5-1.5zM6.5 19a1 1 0 00-.2-.6 1.5 1.5 0 011.502-2.37A1 1 0 009 15.034V15a2 2 0 013.93-.527 1 1 0 001.334.667A2 2 0 1115 19H6.5z" fill="#000"/></svg>
+            </label>
+        </div>
+        
+        <div class="plug-holder">
+            <div class="plug">
+                <div class="">
+                    <div class=""></div>
+                </div>
+                <div class=" ver">
+                    <div class=""></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        let themeIndicator = document.querySelector(".theme-indicator");
+
+        function Plug(){
+                return;
+        } 
+
+        try{
+            document.querySelector("#themeSwitcher").addEventListener("input", (e)=>{
+                if(e.srcElement.checked){
+                    ChangeTheme(colors[1]);
+                    themeIndicator.classList.add("dark");
+                }
+                else{
+                    ChangeTheme(colors[0]);
+                    themeIndicator.classList.remove("dark");
+                }
+            });
+        }
+        catch(e){
+            console.error(e);
+        }
+
+        setTimeout(()=>{
+            try{
+                let a = document.querySelectorAll(".element");
+                for(let element of a) element.classList.remove("hidden");
+            }
+            catch(e){
+
+            }
+        }, 1125);
+
+        let content = document.querySelector(".content"),
+        text = [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum et lacus nec viverra. Curabitur mattis nulla eget leo egestas bibendum nec non nunc. Pellentesque ullamcorper interdum congue.",
+            "Curabitur eu neque ante. Curabitur gravida nisl et nisl dignissim, a vehicula neque posuere. Praesent finibus eu felis nec porttitor. Cras euismod dapibus sapien id gravida.",
+            "Ut ullamcorper vehicula nisl quis posuere. Phasellus vehicula ante sit amet diam ultricies molestie. Etiam scelerisque eros ac metus lacinia mattis.",
+            "Morbi fringilla nulla lacus, vel consectetur tortor tincidunt efficitur. Vivamus justo orci, pretium id nibh vitae, fringilla semper metus. In eget nibh rutrum, ultrices odio egestas, tempor justo.",
+            "Fusce dapibus tincidunt diam, quis sodales quam viverra quis. Proin non faucibus nulla. Donec rutrum ut orci non faucibus. Etiam semper felis ultricies odio eleifend fringilla. Praesent viverra lacinia est, vitae rutrum lorem tincidunt sed."
+        ], index = 0, interval,
+        handler = ()=>{
+            let div = document.createElement("div");
+
+            div.classList.add("element");
+            div.classList.add("hidden");
+
+            div.innerHTML = `<div class="slide"></div> <p>${text[index]}</p>`
+
+            content.insertAdjacentElement("beforeend", div);
+
+            setTimeout(()=>{
+                div.classList.remove("hidden");
+                setTimeout(()=>{
+                    div.removeChild(div.firstChild);
+                }, 125)
+            }, 125);
+
+            index++;
+
+            if(index == text.length){
+                clearInterval(interval);
+            }
+        };
+
+        setTimeout(()=>{
+            document.querySelector(".plug-holder").remove();
+            interval = setInterval(handler, 125);
+        }, 2000)
+
+    </script>
+</html>
