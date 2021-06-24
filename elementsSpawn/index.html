@@ -14,6 +14,8 @@
                 --background-color: #F0F0F0;
                 --main-text-color: #444444;
                 --inactive-color: rgba(0, 0, 0, 0.5);
+                --light-color: #F0F0F0;
+                --dark-color: #1D1D1D;
 
                 background: var(--background-color, #f0f0f0);
             }
@@ -135,8 +137,7 @@
             }
 
             .interface{
-                position: absolute;
-                z-index: 500;
+                position: fixed;
                 top: 0;
                 left: 0;
                 bottom: 0;
@@ -199,7 +200,7 @@
             }
             
             .theme-indicator{
-                position: absolute;
+                position: fixed;
                 top: calc(50% - 350px);
                 left: 0;
                 width: 350px;
@@ -228,10 +229,10 @@
                 left: 500px;
             }
             .theme-indicator > .container > svg#dark > path{
-                fill: #1D1D1D;
+                fill: var(--dark-color);
             }
             .theme-indicator > .container > svg#light > path{
-                fill: #F0F0F0;
+                fill: var(--light-color);
             }
             .theme-indicator.dark > .container{
                 transform: rotate(180deg);
@@ -239,6 +240,7 @@
 
             .content{
                 position: absolute;
+                z-index: 500;
                 top: 100px;
                 left: calc(50% - 250px);
                 width: 500px;
@@ -271,7 +273,7 @@
                 top: -100%;
                 left: 0;
                 background-color: var(--main-color, #12B8FF);
-                animation: spawn 0.25s ease-out 1 normal forwards;
+                animation: spawn 0.3s ease-in-out 1 normal forwards;
             }
 
             .element.hidden > *:not(.slide){
@@ -284,6 +286,12 @@
                 font-size: 18px;
                 line-height: 170%;
                 margin: 0;
+            }
+
+            hr{
+                border: 1px dashed var(--main-color);
+                width: 20%;
+                transform: scaleX(5);
             }
 
             @keyframes spawn{
@@ -315,36 +323,57 @@
                     "background-color" : "#1D1D1D",
                     "inactive-color" : "rgba(255, 255, 255, 0.3)",
                     "main-text-color" : "rgba(255, 255, 255, 0.9)"
-                }
+                },
+                //dark
+                {
+                    "caption" : "dark",
+                    "main-color" : "#093FFF",
+                    "background-color" : "#E6FF81",
+                    "inactive-color" : "rgba(0, 0, 0, 0.5)",
+                    "main-text-color" : "#444444"
+                },
+                //default
+                {
+                    "caption" : "dark",
+                    "main-color" : "#DE12FF",
+                    "background-color" : "#000A2D",
+                    "inactive-color" : "rgba(255, 255, 255, 0.3)",
+                    "main-text-color" : "rgba(255, 255, 255, 0.9)"
+                },
             ];
             
-            function ChangeTheme(colorsObj, caption){
+            function ChangeTheme(colorsObj, index, dark = 0){
                 for(let property in colorsObj){
                     document.body.style.setProperty("--"+property, colorsObj[property]);
                 }
-                saveTheme(caption || colorsObj.caption);
+                saveTheme(index, dark);
             }
 
-            function saveTheme(caption){
+            function saveTheme(index, dark = 0){
                 if(localStorage){
-                    localStorage.setItem("theme", caption);
+                    localStorage.setItem("theme", index);
+                    localStorage.setItem("dark", dark);
                 }
             }
 
             function CheckTheme(){
                 if(localStorage){
-                    let theme = localStorage.getItem("theme")
-                    if(theme && theme === "dark"){
-                        ChangeTheme(colors[1])
-                        try{
-                            document.querySelector(".theme-indicator").classList.add("dark");
-                            document.querySelector("#themeSwitcher > input").checked = true;
-                        }
-                        catch(e){
-                            console.log(e);
+                    let theme = parseInt(localStorage.getItem("theme")),
+                        dark = parseInt(localStorage.getItem("dark"));
+                    if(theme){
+                        ChangeTheme(colors[theme], theme, dark || 0);
+                        document.body.style.setProperty(dark==1?"--dark-color":"--light-color", colors[theme]["background-color"]);
+                        if(dark == 1){
+                            try{
+                                document.querySelector(".theme-indicator").classList.add("dark");
+                                document.querySelector("#themeSwitcher > input").checked = true;
+                            }
+                            catch(e){
+                                console.log(e);
+                            }
                         }
                     }else{
-                        saveTheme("light");
+                        ChangeTheme(colors[0], 0 , dark || 0);
                     }
                 }
             }
@@ -380,7 +409,12 @@
         </div>
     </body>
     <script>
-        let themeIndicator = document.querySelector(".theme-indicator");
+        let themeIndicator = document.querySelector(".theme-indicator"), colorSheme, colorShemeIndex = 0;
+
+        if(localStorage){
+            colorShemeIndex = parseInt(localStorage.getItem("theme")) || 0;
+        }
+        colorSheme = colors[colorShemeIndex];
 
         function Plug(){
                 return;
@@ -388,13 +422,17 @@
 
         try{
             document.querySelector("#themeSwitcher").addEventListener("input", (e)=>{
+                colorShemeIndex = (colorShemeIndex + 1) % colors.length;
+                colorSheme = colors[colorShemeIndex];
                 if(e.srcElement.checked){
-                    ChangeTheme(colors[1]);
+                    ChangeTheme(colorSheme, colorShemeIndex, 1);
                     themeIndicator.classList.add("dark");
+                    document.body.style.setProperty("--dark-color", colorSheme["background-color"]);
                 }
                 else{
-                    ChangeTheme(colors[0]);
+                    ChangeTheme(colorSheme, colorShemeIndex);
                     themeIndicator.classList.remove("dark");
+                    document.body.style.setProperty("--light-color", colorSheme["background-color"]);
                 }
             });
         }
@@ -402,31 +440,171 @@
             console.error(e);
         }
 
-        setTimeout(()=>{
+        
+        function deleteSpaces(src){
+            let out = "", deleted = 0;
+            for(let i = 0; i < src.length; i++){
+                if(src[i] === ' ' && 
+                  (src[i+1] === ' ' 
+                  || i == (src.length-1) 
+                  || i == 0 + deleted)){
+                    deleted++;
+                    continue;
+                }else{
+                    out += src[i];
+                }
+            }
+            return out;
+        }
+
+        function markdown(src, target){
             try{
-                let a = document.querySelectorAll(".element");
-                for(let element of a) element.classList.remove("hidden");
+                let out = "", links = {};
+
+                out = src;
+
+                out = out.replaceAll(/(\$(([\*\>\-\=\+\_\#\^\~\[\]\(\)\/]))|(?<=^\/{2}.*)([\*\>\-\=\+\_\#\^\~\[\]\(\)]))/mg, (matched, captured) => {
+                    return `\$\$code:${captured.codePointAt(0)}\$\$`;
+                });
+                //console.log(out);
+
+                out = out.replaceAll(/(?:(^[ ]{0,3}\#{1,6}[ ]*.*)|(^[ ]{0,3}[\-\=\_]{3,})|((?:^[ ]{0,3}\>.*(?:\n|\r|\0|\z))+))/mg, "\n$1$2$3\n");
+                //console.log(out);
+
+                   
+                for(let founded_link of out.matchAll(/\[(\S.*?\S)\](?:\:[ ]{1,4}(\S.*?)[ ]{1,4}(\S.*?)\s|[ ]{0,4}\((.+?)\)|\:[ ]{1,4}(.+?)\s|\[\])/gm)){
+                    if(typeof(founded_link[4]) != "undefined"){
+                        links[`link_${founded_link[1].toLowerCase()}`] = { 
+                            title : founded_link[1],
+                            address : founded_link[4]
+                        }
+                    }else if(typeof(founded_link[5]) != "undefined"){
+                        links[`link_${founded_link[1].toLowerCase()}`] = { 
+                            title : founded_link[1],
+                            address : founded_link[5]
+                        }
+                    }else if(typeof(founded_link[2]) != "undefined" && typeof(founded_link[2]) != "undefined"){
+                        links[`link_${founded_link[1].toLowerCase()}`] = { 
+                            title : founded_link[3],
+                            address : founded_link[2]
+                        }
+                    }
+                }
+
+                out = out.replaceAll(/\[[^\[\]]*?\]\:[ ]{1,4}(?:\S.*?[ ]{1,4}\S.*?\s|.+?)[ ]*$/gm, "");
+
+                console.log(links);
+
+                out = out.replaceAll(/\[(\S.*?\S)\](?:\:[ ]{1,4}(\S.*?)[ ]{1,4}(\S.*?)\s|[ ]{0,4}\((.+?)\)|\:[ ]{1,4}(.+?)\s|\[\])/gm,
+                    (matched, name, ...args)=>{
+                        let link = links["link_"+name.toLowerCase()] || null;
+                        if(!link) return "";
+                        console.log("link_"+name.toLowerCase() ,link, args);
+                        return `<a href="${link.address||""}">${link.title}</a>`;
+                    }
+                );
+
+                out = out.replaceAll(/((?:\S.*(?:\n|\r|\0|\z|$))+)/gm, "$1\n");
+                //console.log(out);
+                out = out.replaceAll(/((?:(?:^[ ]*(\n|\0|\r|\z))|(?:[\n\0\r]\z))+)/gm, "\n");
+                //console.log(out);
+                out = out.replaceAll(/(?:((?:^[ ]{4,}.*(?:\n|\0|\r|\z))+)|^[ ]{0,3}(\#{1,6}[ ]*.*)(?:\n|\0|\r|\z)|^[ ]*([\-\_]+)(?:\n|\0|\r|\z)|((?:^[ ]{0,3}\>.*(?:\n|\0|\r|\z))+)|((?:^\/{2}.*(?:\n|\0|\r|\z))+)|((?:^[ ]{0,3}\S.*(?:\n|\0|\r|\z))+))/gm,
+                    (matched, code, h, hr, blockquote, insert, p)=>{
+                        //console.log({matched, h, hr, blockquote, p});
+                        if(typeof(code) != "undefined"){
+                            return `<pre><code>${code}</pre></code>`;
+                        }else if(typeof(h) != "undefined"){
+                            let size = h.match(/\#/g).length,
+                                text = h.replace(/\#{1,6}[ ]*(.*)/, "$1");
+                            return `<h${size}>${text}</h${size}>`;
+                        }else if(typeof(hr) != "undefined"){
+                            return "<hr>";
+                        }else if(typeof(blockquote) != "undefined"){
+                            return `<blockquote><p>${blockquote.replaceAll(/(\>[ ]*)/gm, "")}</p></blockquote>`;
+                        }else if(typeof(insert) != "undefined"){
+                            return `${insert.replaceAll(/(\/{2})/gm, "")}`;
+                        }else {
+                            return `<p>${p}</p>`;
+                        }
+
+                        return "";
+                    });
+                //console.log(out);
+
+                out = out.replaceAll(/(\*{3})(.*?)(\*{3})/mg, "<strong><em>$2</em></strong>");
+                out = out.replaceAll(/(\*{2})(.*?)(\*{2})/mg, "<strong>$2</strong>");
+                out = out.replaceAll(/(\*{1})(.*?)(\*{1})/mg, "<em>$2</em>");
+                out = out.replaceAll(/(\~{3})(.*?)(\~{3})/mg, "<del><ins>$2</ins></del>");
+                out = out.replaceAll(/(\~{2})(.*?)(\~{2})/mg, "<del>$2</del>");
+                out = out.replaceAll(/(\~{1})(.*?)(\~{1})/mg, "<ins>$2</ins>");
+                out = out.replaceAll(/(\^{2})(.*?)(\^{2})/mg, "<span style='color:var(--inactive-color);'>$2</span>");
+                out = out.replaceAll(/(\^{1})(.*?)(\^{1})/mg, "<span style='color:var(--main-color);'>$2</span>");
+
+                out = out.replaceAll(/\$\$code:(\d*)\$\$/mg, (matched, captured) => {
+                        return `${String.fromCodePoint(parseInt(captured))}`;
+                    });
+                
+                target.insertAdjacentHTML("beforeend", out);
             }
             catch(e){
-
+                console.log("Something gone wrong: ", e);
             }
-        }, 1125);
+        }
+
+        let src = `
+# ^Try show content using markdown^
+
+Lorem ipsum dolor *^sit amet^*, **consectetur** adipiscing elit.
+~Duis~ fermentum et lacus nec viverra. Curabitur mattis nulla eget leo egestas bibendum nec non ~~nunc~~. 
+Pellentesque ullamcorper interdum congue.
+
+Curabitur eu ^neque ante^.
+~Curabitur~ gravida nisl et nisl *dignissim*, a vehicula neque posuere.
+Praesent ~finibus eu~ felis nec porttitor. Cras euismod dapibus sapien id [lol](./kek).
+
+_______
+
+## Ut ullamcorper
+
+Ut ullamcorper vehicula nisl quis *posuere*. *~^Phasellus vehicula^~** ante sit amet diam ultricies molestie.
+
+Etiam scelerisque 
+eros ac metus lacinia mattis.
+
+    console.log("Hello world");
+
+> In eget nibh **^rutrum^**, ~~ultrices odio egestas~~, tempor justo
+> wdwdwd
+
+Morbi *^fringilla^ ^nulla lacus^*, vel consectetur t^^orto^^r tincidunt efficitur.
+^Vivamus^ justo orci, pretium id nibh vitae, fringilla ~semper metus~.
+In eget nibh **^rutrum^**, ~~ultrices odio egestas~~, tempor justo.
+[lol1][] [lol3](some_address "kek")
+
+---
+
+ ### Fusce dapibus
+
+Fusce dapibus tincidunt diam, ^quis sodales^ q^ua^m *viverra quis*. Proin non faucibus nulla. Donec rutrum ut orci non **~^^faucibus^^~**. Etiam semper felis ultricies odio eleifend fringilla. Praesent viverra lacinia est, vitae rutrum lorem tincidunt sed.
+
+ ## Lol kek
+
+[lol4]: some_address 
+[lol1]: some_address2 some_title
+`,
+        elements = document.createElement("div");
+        markdown(src, elements);
 
         let content = document.querySelector(".content"),
-        text = [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum et lacus nec viverra. Curabitur mattis nulla eget leo egestas bibendum nec non nunc. Pellentesque ullamcorper interdum congue.",
-            "Curabitur eu neque ante. Curabitur gravida nisl et nisl dignissim, a vehicula neque posuere. Praesent finibus eu felis nec porttitor. Cras euismod dapibus sapien id gravida.",
-            "Ut ullamcorper vehicula nisl quis posuere. Phasellus vehicula ante sit amet diam ultricies molestie. Etiam scelerisque eros ac metus lacinia mattis.",
-            "Morbi fringilla nulla lacus, vel consectetur tortor tincidunt efficitur. Vivamus justo orci, pretium id nibh vitae, fringilla semper metus. In eget nibh rutrum, ultrices odio egestas, tempor justo.",
-            "Fusce dapibus tincidunt diam, quis sodales quam viverra quis. Proin non faucibus nulla. Donec rutrum ut orci non faucibus. Etiam semper felis ultricies odio eleifend fringilla. Praesent viverra lacinia est, vitae rutrum lorem tincidunt sed."
-        ], index = 0, interval,
+        data = [...elements.children], index = 0, interval,
         handler = ()=>{
             let div = document.createElement("div");
 
             div.classList.add("element");
             div.classList.add("hidden");
 
-            div.innerHTML = `<div class="slide"></div> <p>${text[index]}</p>`
+            div.insertAdjacentHTML("afterbegin", `<div class="slide"></div>`);
+            div.insertAdjacentElement("beforeend", data[index]);
 
             content.insertAdjacentElement("beforeend", div);
 
@@ -434,19 +612,19 @@
                 div.classList.remove("hidden");
                 setTimeout(()=>{
                     div.removeChild(div.firstChild);
-                }, 125)
-            }, 125);
+                }, 150)
+            }, 150);
 
             index++;
 
-            if(index == text.length){
+            if(index == data.length){
                 clearInterval(interval);
             }
         };
 
         setTimeout(()=>{
             document.querySelector(".plug-holder").remove();
-            interval = setInterval(handler, 125);
+            interval = setInterval(handler, 150);
         }, 2000)
 
     </script>
