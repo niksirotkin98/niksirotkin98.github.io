@@ -1,0 +1,31 @@
+[
+	{
+		"name": "Default",
+		"auto" : false,
+		"textTop": 524,
+		"textLeft": 87,
+		"fieldColor": "#fff000",
+		"textColor": "#000000",
+		"titleColor": "#ffffff",
+		"width": 1108,
+		"lineHeight": 72,
+		"fontSize": 68,
+		"font": "Kanit",
+		"fontWeight" : "bold",
+		"text": "Hello\nThis is Image\nCreator",
+		"height": 590,
+		"showTextBox": false,
+		"highlightedLines" : [1],
+		"box":{
+			"width": 550,
+			"height" : 300
+		},
+		"showImage": true,
+		"imageScale": 1,
+		"settings" : true,
+		"imagePoint": {
+			"x" : 0,
+			"y" : 0
+		}
+	}
+]

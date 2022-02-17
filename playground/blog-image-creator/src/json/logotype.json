@@ -1,0 +1,9 @@
+[
+	{
+		"descr": "Default logotype",
+		"name": "default",
+		"x": 88,
+		"src": "./src/img/logo.svg",
+		"y": 79
+	}
+]

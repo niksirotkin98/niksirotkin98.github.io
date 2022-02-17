@@ -1,0 +1,413 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script defer src="./src/script/jszip.js"></script>
+        <script defer src="./src/script/script.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+        <style>
+            *{
+                margin:0;
+                padding: 0;
+                font-family: sans-serif;
+                outline: none;
+                resize: none;
+            }
+            :root{
+                --preloader-text: #7c7c7c;
+            }
+            canvas{
+                width: 100%;
+            }
+            body.loading{
+                overflow: hidden;
+            }
+            #preloader{
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                z-index: 9999;
+                background:white;
+            }
+            .preloader{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+            .preloader-rotater{
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 0;
+                width: 0;
+                animation: rotate 1.5s infinite;
+                opacity: 0.2;
+            }
+            .preloader > .preloader-rotater:nth-child(2){
+                animation-delay: 0.1s;
+            }
+            .preloader > .preloader-rotater:nth-child(3){
+                animation-delay: 0.2s;
+            }
+            .preloader > .preloader-rotater:nth-child(4){
+                animation-delay: 0.3s;
+            }
+            .preloader > .preloader-rotater:nth-child(5){
+                animation-delay: 0.4s;
+            }
+            .preloader > .preloader-rotater:nth-child(6){
+                animation-delay: .5s;
+            }
+            .preloader-rotater  > div{
+                position: absolute ;
+                top: -10px;
+                left: -10px;
+                width: 20px;
+                height: 20px;
+                background: #aaa;
+                border-radius: 100%;
+                transform: translateY(-50px);
+            }
+            .preloader-rotater:nth-child(1) > div{
+                background: rgb(255, 0, 0);
+            }
+            .preloader-rotater:nth-child(2) > div{
+                background: rgb(255, 208, 0);
+            }
+            .preloader-rotater:nth-child(3) > div{
+                background: rgb(51, 255, 0);
+            }
+            .preloader-rotater:nth-child(4) > div{
+                background: rgb(0, 255, 221);
+            }
+            .preloader-rotater:nth-child(5) > div{
+                background: rgb(0, 26, 255);
+            }
+            .preloader-rotater:nth-child(6) > div{
+                background: rgb(255, 0, 234);
+            }
+            #preloader_text{
+                position: absolute;
+                top: calc(50% + 150px);
+                left: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 20px;
+                color: #888;
+            }
+            @keyframes pulse{
+                from {opacity: 0.6;}
+                50% {opacity: 1;}
+                to {opacity: 0.6;}
+            }
+            @keyframes rotate{
+                from {transform: rotate(0deg);}
+                to {transform: rotate(360deg);}
+            }
+        </style>
+        <link rel="stylesheet" href="./src/css/style.css"/>
+    </head>
+    <body class="loading">
+        <div id="preloader">
+            <div class="preloader">
+                <div class="preloader-rotater">
+                    <div></div>
+                </div>
+                <div class="preloader-rotater">
+                    <div></div>
+                </div>
+                <div class="preloader-rotater">
+                    <div></div>
+                </div>
+                <div class="preloader-rotater">
+                    <div></div>
+                </div>
+                <div class="preloader-rotater">
+                    <div></div>
+                </div>
+                <div class="preloader-rotater">
+                    <div></div>
+                </div>
+            </div>
+            <span id="preloader_text">Loading...</span>
+        </div>
+        <div class="content-container column-container space-between">
+            <div id="content" class="column-container">
+                <input type="checkbox" id="settings-switcher" checked>
+                <div class="main-panel row-container space-between">
+                    <div class="output-panel column-container">
+                        <canvas id="canvas" width="100%" height="50%" class="canvas"></canvas>
+                        <span class="label margin-top-middle">Input Your Text</span>
+                        <textarea id="text" class="textarea margin-top-low"></textarea>
+                        <div class="row-container space-between margin-top-middle align-center">
+                            <div class="row-container">
+                                <button id="download">Download PNG</button>
+                                <button id="randomize" class="transparent">Random image</button>
+                            </div>
+                            <label for="settings-switcher" id="settings-switcher-label">
+                                <div class="icon" id="openOptions">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                        <path d="M2.40039 11.2002C2.77248 11.2002 15.8888 11.2002 22.4004 11.2002" stroke="#FF3366" stroke-width="1.2"/>
+                                        <path d="M37.5996 28.7998C37.2275 28.7998 24.1112 28.7998 17.5996 28.7998" stroke="#FF3366" stroke-width="1.2"/>
+                                        <path d="M29.5996 11.2002C29.7484 11.2002 34.995 11.2002 37.5996 11.2002" stroke="#FF3366" stroke-width="1.2"/>
+                                        <path d="M10.4004 28.7998C10.2516 28.7998 5.00504 28.7998 2.40039 28.7998" stroke="#FF3366" stroke-width="1.2"/>
+                                        <path d="M29.8004 11.2002C29.8004 13.078 28.2782 14.6002 26.4004 14.6002C24.5226 14.6002 23.0004 13.078 23.0004 11.2002C23.0004 9.32243 24.5226 7.8002 26.4004 7.8002C28.2782 7.8002 29.8004 9.32243 29.8004 11.2002Z" stroke="#FF3366" stroke-width="1.2"/>
+                                        <path d="M10.6 29C10.6 27.1222 12.1222 25.6 14 25.6C15.8778 25.6 17.4 27.1222 17.4 29C17.4 30.8778 15.8778 32.4 14 32.4C12.1222 32.4 10.6 30.8778 10.6 29Z" stroke="#FF3366" stroke-width="1.2"/>
+                                    </svg>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="palette-panel column-container">
+                        <span class="label">Select Background</span>
+                        <ul id="colors" class="palette margin-top-low column-container"></ul>
+                    </div>
+                </div>
+                
+                <div class="settings column-container margin-top-middle">
+                    <div class="row-container space-between align-center">
+                        <span class="title">Settings</span>
+                        <label for="settings-switcher"><span class="operation">Hide settings</span></label>
+                    </div>
+
+                    <div class="tabs-container margin-top-middle">
+                        <input class="radio" id="one" name="group" type="radio" checked>
+                        <input class="radio" id="two" name="group" type="radio">
+                        <input class="radio" id="three" name="group" type="radio">
+                        <input class="radio" id="four" name="group" type="radio">
+                        <div class="tabs-labels">
+                            <label id="one-label" for="one">Text</label>
+                            <label id="two-label" for="two">Illustration</label>
+                            <label id="three-label" for="three">Color</label>
+                            <label id="four-label" for="four">Additional</label>
+                        </div>
+                        <div class="tabs">
+                            <div class="tab" id="one-tab">
+                                <div class="row-container align-flex-start">
+                                    <div class="column-container" style="width:250px; margin-right: 30px;">
+                                        <div class="checkbox margin-top-low">
+                                            <input type="checkbox" id="autoResizeText"  oninput="APP.options.toggleAutoResize(this)">
+                                            <label for="autoResizeText">Auto resize Text</label>
+                                        </div>
+                                        <div class="checkbox margin-top-middle">
+                                            <input type="checkbox" id="showTextBox" oninput="APP.options.toggleShowBorders(this)">
+                                            <label for="showTextBox">Show Text Borders</label>
+                                        </div>
+                                    </div>
+                                    <div class="column-container" style="width:270px">
+                                        <div class="input">
+                                            <label>Highlighted Lines(with a comma)</label>
+                                            <input type="text" value="" id="highlightedLines">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="spoiler margin-top-high">
+                                    <input type="checkbox" id="spoiler_1">
+                                    <label for="spoiler_1">Additional settings</label>
+                                    <div class="content">
+                                        <div class="row-container align-flex-start">
+                                            <div class="column-container" style="width:calc((100% - 90px) / 4); margin-right: 30px;">
+                                                <div class="input">
+                                                    <label>Font size</label>
+                                                    <input type="number" value="100"  id="fontSize"  oninput="APP.options.changeSettings('fontSize' ,this.value, true)">
+                                                </div>
+                                                <div class="input margin-top-middle">
+                                                    <label>Text border-box width</label>
+                                                    <input type="number" value="100" id="textBoxWidth" oninput="APP.options.changeTextBox(this)">
+                                                </div>
+                                            </div>
+                                            <div class="column-container" style="width:calc((100% - 90px) / 4); margin-right: 30px;">
+                                                <div class="input">
+                                                    <label>Line Height</label>
+                                                    <input type="number" value="100"id="lineHeight" oninput="APP.options.changeSettings('lineHeight' ,this.value, true)">
+                                                </div>
+                                                <div class="input margin-top-middle">
+                                                    <label>Text border-box height</label>
+                                                    <input type="number" value="100" id="textBoxHeight" oninput="APP.options.changeTextBox(this, true)">
+                                                </div>
+                                            </div>
+                                            <div class="column-container" style="width:calc((100% - 90px) / 4); margin-right: 30px;">
+                                                <div class="input">
+                                                    <label>Text left</label>
+                                                    <input type="number" value="100" id="textLeft"  oninput="APP.options.changeSettings('textLeft' ,this.value, true)">
+                                                </div>
+                                            </div>
+                                            <div class="column-container" style="width:calc((100% - 90px) / 4);">
+                                                <div class="input">
+                                                    <label>Text right</label>
+                                                    <input type="number" value="100" id="textTop"  oninput="APP.options.changeSettings('textTop' ,this.value, true)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab" id="two-tab">
+                                <div class="row-container align-flex-start">
+                                    <div class="column-container" style="width:calc((100% - 90px) / 6); margin-right: 30px;">
+                                        <div class="input">
+                                            <label>Illustration width</label>
+                                            <input type="number" value="100" id="width" oninput="APP.options.changeIllustrationBox(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="column-container" style="width:calc((100% - 90px) / 6); margin-right: 30px;">
+                                        <div class="input">
+                                            <label>Illustration height</label>
+                                            <input type="number" value="100" id="height" oninput="APP.options.changeIllustrationBox(this.value, true)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-container align-flex-start margin-top-middle">
+                                    <div class="column-container" style="width:calc((100% - 90px) / 6); margin-right: 30px;">
+                                        <div class="input">
+                                            <label>Left</label>
+                                            <input type="number" value="100" id="illustrationX" oninput="APP.options.changeIllustration('x',this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="column-container" style="width:calc((100% - 90px) / 6); margin-right: 30px;">
+                                        <div class="input">
+                                            <label>Top</label>
+                                            <input type="number" value="100" id="illustrationY" oninput="APP.options.changeIllustration('y',this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="column-container" style="width:calc((100% - 90px) / 3);">
+                                        <div class="input">
+                                            <label>Tags</label>
+                                            <input type="text" value="100" id="illustrationTags">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-container align-flex-start margin-top-middle">
+                                    <div class="column-container" style="width:calc((100% - 90px) / 6); margin-right: 30px;">
+                                        <div class="input">
+                                            <label>Name</label>
+                                            <input type="text" value="100" id="illustrationName" oninput="APP.options.changeIllustration('name',this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="column-container" style="width:calc((100% - 90px) / 6); margin-right: 30px;">
+                                        <div class="input">
+                                            <label>Description</label>
+                                            <input type="text" value="100" id="illustrationDescr" oninput="APP.options.changeIllustration('descr',this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="column-container" style="width:calc((100% - 90px) / 5); margin-right: 30px;">
+                                        <div class="input">
+                                            <label>Source</label>
+                                            <input type="text" value="100" id="illustrationSrc" oninput="APP.options.changeIllustration('src',this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="column-container" style="align-self: flex-end;padding-bottom: 11.5px;">
+                                        <span class="operation" onclick="APP.addIllustration()">+ Add New Image</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab" id="three-tab">
+                                <div class="row-container align-flex-start">
+
+                                    <div class="input color" style="width:calc((100% - 90px) / 4); margin-right: 30px;">
+                                        <label>Figure color</label>
+                                        <div class="row-container">
+                                            <input type="text" id="backBlurFigure" alt="figure">
+                                            <input type="color" for="backBlurFigure" oninput="this.previousElementSibling.dispatchEvent(new CustomEvent('input', {detail:{'value':this.value}}))">
+                                        </div>
+                                    </div>
+                                    <div class="input color" style="width:calc((100% - 90px) / 4); margin-right: 30px;">
+                                        <label>Background top color</label>
+                                        <div class="row-container">
+                                            <input type="text" id="backBlurFirst" alt="backFirst">
+                                            <input type="color" for="backBlurFirst" oninput="this.previousElementSibling.dispatchEvent(new CustomEvent('input', {detail:{'value':this.value}}))">
+                                        </div>
+                                    </div>
+                                    <div class="input color" style="width:calc((100% - 90px) / 4); margin-right: 30px;">
+                                        <label>Background bottom color</label>
+                                        <div class="row-container">
+                                            <input type="text" id="backBlurLast" alt="backLast">
+                                            <input type="color" for="backBlurLast" oninput="this.previousElementSibling.dispatchEvent(new CustomEvent('input', {detail:{'value':this.value}}))">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row-container align-flex-start margin-top-middle">
+
+                                    <div class="input" style="width:calc((100% - 90px) / 5); margin-right: 30px;">
+                                        <label>Name</label>
+                                        <input type="text" value="-" id="backBlurName" oninput="APP.options.changeColor('name',this.value)">
+                                    </div>
+                                    <div class="column-container" style="align-self: flex-end;padding-bottom: 11.5px;">
+                                        <span class="operation" onclick="APP.addColor()">+ Add New Color</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="spoiler margin-top-high">
+                                    <input type="checkbox" id="spoiler_2">
+                                    <label for="spoiler_2">Additional settings</label>
+                                    <div class="content">
+
+                                        <div class="row-container align-flex-start">
+                                            <div class="input color" style="width:calc((100% - 90px) / 5); margin-right: 30px;">
+                                                <label>Highlighted text color</label>
+                                                <div class="row-container">
+                                                    <input type="text" for="highlightedTextColor"  oninput="APP.options.changeSettings('textColor', this.value)">
+                                                    <input type="color" id="highlightedTextColor" oninput="this.previousElementSibling.dispatchEvent(new CustomEvent('input', {detail:{'value':this.value}}))">
+                                                </div>
+                                            </div>
+                                            <div class="input color" style="width:calc((100% - 90px) / 5); margin-right: 30px;">
+                                                <label>Highlight color</label>
+                                                <div class="row-container">
+                                                    <input type="text" for="highlightColor" oninput="APP.options.changeSettings('fieldColor', this.value)">
+                                                    <input type="color" id="highlightColor" oninput="this.previousElementSibling.dispatchEvent(new CustomEvent('input', {detail:{'value':this.value}}))">
+                                                </div>
+                                            </div>
+                                            <div class="input color" style="width:calc((100% - 90px) / 5); margin-right: 30px;">
+                                                <label>Text color</label>
+                                                <div class="row-container">
+                                                    <input type="text" for="textColor" oninput="APP.options.changeSettings('titleColor', this.value)">
+                                                    <input type="color" id="textColor" oninput="this.previousElementSibling.dispatchEvent(new CustomEvent('input', {detail:{'value':this.value}}))">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab" id="four-tab">
+                                <div class="column-container">
+                                    <span class="operation" onclick="APP.getSettingsJSON()">Download settings.json</span>
+                                    <span class="operation margin-top-middle" onclick="APP.getIllustrationsJSON()">Download illustrations.json</span>
+                                    <span class="operation margin-top-middle" onclick="APP.getColorsJSON()">Download backBlur.json</span>
+                                    <span class="operation margin-top-middle" onclick="APP.getAllFiles()">Download all files</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="illustrations-panel margin-top-middle">
+                    <span class="label">Select Illusration</span>
+                    
+                    <div class="filter-container row-container tags-bar" id="tags-bar">
+                        <input type="text" class="tags text-input margin-top-low" id="filter" placeholder="Find Image by Tag">
+                    </div>
+                    <div class="tags-suggestion-bar">
+                        <div class="row-container" id="tags-suggestion-bar">
+                        </div>
+                        <ul id="validIllustrations" class="illustrations grid">
+                        </ul>
+                    </div>
+                    <ul id="illustrations" class="illustrations grid margin-top-middle">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script defer>
+            document.body.querySelectorAll(".input.color > div > input[type='text']").forEach(i=>i.addEventListener("input", (e)=>{
+                if(!e.isTrusted) e.target.value = e.detail.value;
+            }));
+        </script>
+    </body>
+</html>

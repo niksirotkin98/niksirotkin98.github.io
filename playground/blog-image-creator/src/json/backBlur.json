@@ -1,0 +1,86 @@
+[
+	{
+		"figure": "ff0000",
+		"name": "Red",
+		"backFirst": "ff4242",
+		"backLast": "ff33be"
+	},
+	{
+		"figure": "ffcdb8",
+		"name": "Orange",
+		"backFirst": "ff4733",
+		"backLast": "fff70a"
+	},
+	{
+		"figure": "00ffa2",
+		"name": "Light green",
+		"backFirst": "78b677",
+		"backLast": "bbff00"
+	},
+	{
+		"figure": "DCDDFF",
+		"name": "Emerald",
+		"backFirst": "70d4ff",
+		"backLast": "10da57"
+	},
+	{
+		"figure": "e0ff47",
+		"name": "Green",
+		"backFirst": "019827",
+		"backLast": "b3ba5a"
+	},
+	{
+		"figure": "f0feff",
+		"name": "Sky",
+		"backFirst": "0080ff",
+		"backLast": "2e61ad"
+	},
+	{
+		"figure": "02F0FF",
+		"name": "Navy",
+		"backFirst": "260466",
+		"backLast": "3C52A8"
+	},
+	{
+		"figure": "FD9DFF",
+		"name": "Purple",
+		"backFirst": "cf4dff",
+		"backLast": "4f64c9"
+	},
+	{
+		"figure": "f07070",
+		"name": "Dark purple",
+		"backFirst": "6633db",
+		"backLast": "91467d"
+	},
+	{
+		"figure": "7aebff",
+		"name": "Emerald to Blue",
+		"backFirst": "a6fb60",
+		"backLast": "224fb9"
+	},
+	{
+		"figure": "fbff00",
+		"name": "Orange to Purple",
+		"backFirst": "ffc31f",
+		"backLast": "ff33e7"
+	},
+	{
+		"figure": "2c00a3",
+		"name": "Purple to Blue",
+		"backFirst": "b761bd",
+		"backLast": "00fbff"
+	},
+	{
+		"figure": "bbff00",
+		"name": "Emerald to Orange",
+		"backFirst": "61f4ff",
+		"backLast": "ff7575"
+	},
+	{
+		"figure": "636363",
+		"name": "Black",
+		"backFirst": "1f1f1f",
+		"backLast": "4d4d4d"
+	}
+]
