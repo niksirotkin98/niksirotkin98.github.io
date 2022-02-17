@@ -18,6 +18,8 @@ _______
 //<a target="_blank" href="./playground/moveable-blocks">Подвигать и поудалять</a>
 //<a target="_blank" href="./playground/try-to-kick">Увороты</a>
 //<a target="_blank" href="./playground/blog-image-creator">Создаватель картинок для блога</a>
+//<a target="_blank" href="./ghost-run-game/move-on-map-full.html">Бегать на стрелки, Колесико масштаб</a>
+//<a target="_blank" href="./ghost-run-game/move-with-sword.html">Бегать - WASD, Удар - F</a>
 
 _______
 
