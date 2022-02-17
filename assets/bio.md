@@ -20,6 +20,7 @@ _______
 //<a target="_blank" href="./playground/blog-image-creator">Создаватель картинок для блога</a>
 //<a target="_blank" href="./ghost-run-game/move-on-map-full.html">Бегать на стрелки, Колесико масштаб</a>
 //<a target="_blank" href="./ghost-run-game/move-with-sword.html">Бегать - WASD, Удар - F</a>
+//<a target="_blank" href="./game-for-birthday">4 игры в одной(Сделано для выдачи пароля)</a>
 
 _______
 
