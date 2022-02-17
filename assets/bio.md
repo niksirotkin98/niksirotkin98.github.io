@@ -17,6 +17,7 @@ _______
 //<a target="_blank" href="./playground/pseudo3d">Слежка за мышкою</a>
 //<a target="_blank" href="./playground/moveable-blocks">Подвигать и поудалять</a>
 //<a target="_blank" href="./playground/try-to-kick">Увороты</a>
+//<a target="_blank" href="./playground/blog-image-creator">Создаватель картинок для блога</a>
 
 _______
 
