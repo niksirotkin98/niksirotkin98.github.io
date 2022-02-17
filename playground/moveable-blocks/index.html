@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family: Manrope, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: #becbe4;
+            overflow: hidden;
+        }
+        body.blur > .moveable:not(.target){
+            filter: blur(5px);
+        }
+        .moveable{
+            --left: 50%;
+            --top: 50%;
+            --shadow-top: 5px;
+            --blur: 10px;
+            --shadow: #0032c73a;
+
+            position: absolute;
+            top: var(--top);
+            left: var(--left);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            gap: 20px;
+            background-color: white;
+            border-radius: 3px;
+            color: #444444;
+            box-shadow: 0px var(--shadow-top) var(--blur) var(--shadow);
+            cursor: pointer;
+            user-select: none;
+            transform: translate(-50%, -50%);
+            transition: box-shadow 150ms,
+                transform 150ms;
+        }
+        .moveable:hover{
+            --shadow-top: 15px;
+            --blur: 20px;
+            --shadow: #0032c718;
+        }
+        .moveable:active{
+            transform: translate(-50%, -50%) scale(1.2);
+            color: #222222;
+        }
+        .moveable span.state{    
+            position: absolute;
+            display: block;
+            top: -10px;
+            left: 50%;
+            width: 80px;
+            height: 25px;
+            border-radius: 100px;
+            background: #ff7f24;
+            color: white;
+            text-align: center;
+            line-height: 25px;
+            font-size: 14px;
+            transition-duration: 150ms;
+            transform: translateX(-50%) scale(0);
+        }
+        .moveable.dragging > span.state{
+            transform: translateX(-50%) scale(1);
+        }
+        .moveable.target{
+            border: 3px solid #6c65af;
+        }
+
+        ul#context-menu.active{
+            display: flex;
+        }
+        ul#context-menu{
+            z-index: 9999;
+            display: none;
+            position: absolute;
+            --left: 50%;
+            --top: 50%;
+            top: var(--top);
+            left: var(--left);
+            padding: 10px 0 10px;
+            width: 300px;
+            background: white;
+            list-style: none;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0px -5px 10px #0032c73a;
+        }
+        #context-menu li{
+            flex: 1;
+            padding: 10px;
+            line-height: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333333;
+        }
+        #context-menu li:hover{
+            background-color: #dce5ff;
+        }
+    </style>
+</head>
+<body>
+    <ul id="context-menu">
+    </ul>
+    <script>
+        let currentId = 0
+        let items = []
+        let menu = {
+            actions: [
+                {
+                    name: "delete",
+                    caption: "Delete item"
+                }
+            ],
+
+            onDelete(){
+                this.target.root.remove()
+                this.target = null
+            },
+
+            root: document.querySelector('#context-menu'),
+
+            setActive(){
+                document.body.classList.add('blur')
+                if(this.target) 
+                    this.target.root.classList.add('target')
+                this.root.classList.add('active')
+                return this
+            },
+            unsetActive(){
+                document.body.classList.remove('blur')
+                if(this.target) 
+                    this.target.root.classList.remove('target')
+                this.root.classList.remove('active')
+                return this
+            },
+            show(x,y, item){
+                this.unsetActive()
+                this.root.style.setProperty('--left', x + 'px')
+                this.root.style.setProperty('--top', y + 'px')
+                this.target = item
+                this.setActive()
+            },
+
+            init(){
+                for(let a of this.actions){
+                    let actionMethodName = 'on' + a.name.charAt(0).toUpperCase() + a.name.slice(1);
+                    let li = document.createElement('li')
+                    li.innerHTML = a.caption
+                    li.addEventListener('click', (e)=>{
+                        this.unsetActive()
+                        this[actionMethodName](e)
+                    })
+                    this.root.appendChild(li)
+                }
+            }
+        }
+        menu.init()
+        let target = function(x, y, id){
+            this.options = {
+                isDragable: false,
+                data: "test",
+                width: 0,
+                height: 0,
+                x: 0,
+                y: 0,
+                padding: 20,
+            }
+            this.setDragable = function() {
+                this.options.isDragable = true
+                return this
+            }
+            this.unsetDragable = function() {
+                this.options.isDragable = false
+                this.root.classList.remove("dragging")
+                return this
+            }
+            this.updateDims = function(){
+                let dims = this.root.getClientRects()[0]
+                this.options.width = dims.width
+                this.options.height = dims.height
+                this.options.halfWidth = Math.round(dims.width / 2) + this.options.padding
+                this.options.halfHeight = Math.round(dims.height / 2) + this.options.padding
+                return this
+            }
+            this.setPosition = function(mouseEvent){
+                let borderX = window.innerWidth - this.options.halfWidth
+                let borderY = window.innerHeight - this.options.halfHeight
+                this.options.x = mouseEvent.x < this.options.halfWidth? this.options.halfWidth: mouseEvent.x > borderX? borderX: mouseEvent.x
+                this.options.y = mouseEvent.y < this.options.halfHeight? this.options.halfHeight: mouseEvent.y > borderY? borderY: mouseEvent.y
+                return this
+            }
+            this.update = function(){
+                this.root.style.setProperty('--left', this.options.x + 'px')
+                this.root.style.setProperty('--top', this.options.y + 'px')
+                this.root.classList.add("dragging")
+                return this
+            }
+            this.ifDragableThen = function(){
+                return this.options.isDragable? this: null
+            }
+            
+            this.onMouseDown = function(e){
+                if(e.button == 0)
+                    this.setDragable()
+            }
+            this.onMouseUp = function(e){
+                this.unsetDragable()
+            }
+            this.onMouseMove = function(e){
+                try{
+                    this.ifDragableThen()
+                    .updateDims()
+                    .setPosition(e)
+                    .update()
+                } catch(e){
+                    //
+                }
+            }
+
+            document.body.insertAdjacentHTML('beforeend',
+                `<div id="blank${id}" class="moveable" data-id="${id}">
+                    <span class="state">dragging</span>
+                    <h1>Hello Manjaro!</h1>
+                    <p>Welcome back in Linux, Nik.</p>
+                </div>`
+            )
+
+            this.root = document.querySelector('#blank' + id)
+            this.stateElement = document.querySelector('#blank' + id + ' .state')
+
+            this.root.addEventListener("mousedown", e => { this.onMouseDown(e); e.stopPropagation() })
+            document.body.addEventListener("mouseup", e => { this.onMouseUp(e); e.stopPropagation() })
+            this.root.addEventListener("contextmenu", e => { e.preventDefault(); e.stopPropagation(); menu.show(e.x, e.y, this) })
+            document.body.addEventListener("contextmenu", e => { e.preventDefault(); e.stopPropagation(); menu.show(e.x, e.y, null) })
+            document.body.addEventListener("mousemove", e => this.onMouseMove(e));
+            this
+                .updateDims()
+                .setPosition({x, y})
+                .update()
+                .unsetDragable()
+
+            return this
+        }
+
+        document.body.addEventListener('mousedown', (e)=>{
+            if(e.button == 0 && e.srcElement == document.body)
+                items.push(new target(e.x, e.y, currentId++))
+        })
+    </script>
+</body>
+</html>

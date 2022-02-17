@@ -1,0 +1,342 @@
+:root{
+    --content-width: 500px;
+    font-family: "Jost", sans-serif;
+}
+
+body{
+    --main-color: #12B8FF;
+    --background-color: #F0F0F0;
+    --main-text-color: #444444;
+    --inactive-color: rgba(0, 0, 0, 0.5);
+    --light-color: #F0F0F0;
+    --dark-color: #1D1D1D;
+
+    background: var(--background-color, #f0f0f0);
+}
+
+*{  
+    color: var(--main-text-color, #444444);
+}
+
+.plug-holder{
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: var(--background-color, #F0F0F0);
+}
+.on-switch, .transition_0_5s{
+    transition-duration: 0.5s;
+}
+.plug{
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 50px;
+    animation: plugElementsContainerAnimation ease-in 2s infinite normal forwards;
+}
+.plug > div{
+    transform: rotate(45deg);
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+.plug > div.ver{
+    transform: rotate(135deg);
+}
+.plug > div > div{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 10px;
+    height: 10px;
+    background: var(--main-color, #12B8FF);
+    animation: plugElementsAnimation ease-in 2s infinite normal forwards;
+}
+
+
+@keyframes plugElementsAnimation{
+    0%{
+        transform: scale(0,0);
+    }
+    10%{
+        transform: scale(6,6);
+    }
+    15%{
+        transform: scale(4,4);
+    }
+    20%{
+        transform: scale(5.5,5.5);
+    }
+    25%{
+        transform: scale(5,5);
+    }
+    40%{
+        transform: scale(5, 5);
+    }
+    45%{
+        transform: scale(5, 1);
+    }
+    70%{
+        transform: scale(5, 1);
+    }
+    75%{
+        transform: scale(1, 1);
+    }
+    79%{
+        transform: scale(1, 1);
+    }
+    
+    80%{
+        transform: scale(0,0);
+    }
+
+    82%{
+        transform: scale(0.8,0.8);
+    }
+
+    87%{
+        transform: scale(0,0);
+    }
+    100%{
+        transform: scale(0,0);
+    }
+}
+
+@keyframes plugElementsContainerAnimation{
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    55%{
+        transform: rotate(90deg);
+    }
+    100%{
+        transform: rotate(90deg);
+    }
+}
+
+@keyframes plugIntro{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+.interface{
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+.icon{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+
+    position: relative;
+    width: 50px;
+    height: 50px;
+
+    border: none;
+    border-color: rgba(0,0,0,0);
+    background: none;
+    transition-duration: 0.15s;
+}
+.icon:hover{
+    border: 1px solid var(--main-color, #12B8FF);
+}
+.icon:hover > svg > path{
+    fill: var(--main-color, #12B8FF);
+    transition-duration: 0.15s;
+}
+.icon > input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+.icon > svg {
+    width: 32px;
+    height: 32px;
+}
+.icon > svg > path{
+    fill: var(--inactive-color, rgba(0, 0, 0, 0.5));
+}
+.icon input ~ svg[data-option="false"]{
+    display:block;
+}
+.icon input ~ svg[data-option="true"]{
+    display:none;
+}
+.icon input:checked ~ svg[data-option="true"]{
+    display:block;
+}
+.icon input:checked ~ svg[data-option="false"]{
+    display:none;
+}
+
+#themeSwitcher{
+    position: absolute;
+    z-index: 999;
+    top: 100px;
+    left: calc(50% - 310px);
+}
+
+.theme-indicator{
+    position: fixed;
+    top: calc(50% - 350px);
+    left: 0;
+    width: 350px;
+    height: 700px;
+    overflow: hidden;
+}
+.theme-indicator > .container{
+    position: absolute;
+    top: 0;
+    left: -350px;
+    width: 700px;
+    height: 700px;
+    transform: rotate(0deg);
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out;
+}
+.theme-indicator > .container > svg{
+    position: absolute;
+    left: 0px;
+    top: 250px;
+    width: 200px;
+    height: 200px;
+    transform: rotate(180deg);
+}
+.theme-indicator > .container > svg#light{
+    left: 500px;
+}
+.theme-indicator > .container > svg#dark > path{
+    fill: var(--dark-color);
+}
+.theme-indicator > .container > svg#light > path{
+    fill: var(--light-color);
+}
+.theme-indicator.dark > .container{
+    transform: rotate(180deg);
+}
+
+.content{
+    position: absolute;
+    top: 100px;
+    left: calc(50% - var(--content-width) / 2);
+    width: var(--content-width);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 100px;
+}
+
+.content > .element:first-child{
+    margin-top: 0;
+}
+
+.element{
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    margin: auto;
+    overflow: hidden;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    margin-top: 25px;
+}
+
+.element > .slide{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -100%;
+    left: 0;
+    background-color: var(--main-color, #12B8FF);
+    animation: spawn 0.3s ease-in-out 1 normal forwards;
+}
+
+.element.hidden > *:not(.slide){
+    opacity: 0;
+}
+
+.element > span, .element > p{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 170%;
+    margin: 0;
+}
+
+hr{
+    border: 1px dashed var(--main-color);
+    width: 20%;
+    transform: scaleX(5);
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin: 0;
+}
+
+.avatar{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid var(--main-color);
+}
+.filter{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: var(--main-color);
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+}
+.whspace{
+    display: inline-block;
+    width: 50%;
+}
+
+.content a{
+    font-size: 18px;
+}
+
+@keyframes spawn{
+    0%{
+        top: -100%; left: 0;
+    }
+    50%{
+        top: 0%; left: 0;
+    }
+    100%{
+        top: 0%; left: 100%;
+    }
+}
+
+@media screen and (max-width: 720px) {
+}
+
+@media screen and (max-width: 720px) {
+    :root{
+        --content-width: calc(100vw - 100px)
+    }
+    #themeSwitcher{
+        left: calc(50% + var(--content-width) / 2);
+        transform: translateX(-100%);
+    }
+}
