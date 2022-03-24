@@ -56,7 +56,7 @@ _______
 
 # Контакты
 
-email:      ^niksirotkin98@gmail.com^>>>
-telegram:   ^@goo4all^>>>
-instagram:  ^@goo4all^>>>
-skype:      ^@niksirotkin98^
+/cnts:email:niksirotkin98@gmail.com/
+/cnts:telegram:goo4all/
+/cnts:instagram:goo4all/
+/cnts:skype:niksirotkin98/

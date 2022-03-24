@@ -12,6 +12,7 @@ body{
     --dark-color: #1D1D1D;
 
     background: var(--background-color, #f0f0f0);
+    margin: 0;
 }
 
 *{  
@@ -26,6 +27,9 @@ body{
     bottom: 0;
     right: 0;
     background-color: var(--background-color, #F0F0F0);
+}
+.plug-holder.hidden{
+    display: none;
 }
 .on-switch, .transition_0_5s{
     transition-duration: 0.5s;
@@ -155,6 +159,10 @@ body{
 .icon:hover{
     border: 1px solid var(--main-color, #12B8FF);
 }
+.icon:hover,
+.icon:hover > *{
+    color: var(--main-color, #12B8FF);
+}
 .icon:hover > svg > path{
     fill: var(--main-color, #12B8FF);
     transition-duration: 0.15s;
@@ -172,24 +180,26 @@ body{
 .icon > svg > path{
     fill: var(--inactive-color, rgba(0, 0, 0, 0.5));
 }
-.icon input ~ svg[data-option="false"]{
+.icon input ~ [data-option="false"],
+.icon input:checked ~ [data-option="true"]{
     display:block;
 }
-.icon input ~ svg[data-option="true"]{
-    display:none;
-}
-.icon input:checked ~ svg[data-option="true"]{
-    display:block;
-}
-.icon input:checked ~ svg[data-option="false"]{
+.icon input ~ [data-option="true"],
+.icon input:checked ~ [data-option="false"]{
     display:none;
 }
 
-#themeSwitcher{
+.switcher{
     position: absolute;
     z-index: 999;
-    top: 100px;
     left: calc(50% - 310px);
+    font-weight: bold;
+}
+#themeSwitcher{
+    top: 100px;
+}
+#langSwitcher{
+    top: 160px;
 }
 
 .theme-indicator{
@@ -316,6 +326,16 @@ h1, h2, h3, h4, h5, h6{
     font-size: 18px;
 }
 
+.cnts{
+    display: flex;
+    width: 100%;
+}
+.cnts > a{
+    text-align: right;
+    flex:1;
+    text-decoration: none;
+}
+
 @keyframes spawn{
     0%{
         top: -100%; left: 0;
@@ -335,8 +355,9 @@ h1, h2, h3, h4, h5, h6{
     :root{
         --content-width: calc(100vw - 100px)
     }
-    #themeSwitcher{
+    .switcher{
         left: calc(50% + var(--content-width) / 2);
         transform: translateX(-100%);
     }
 }
+
