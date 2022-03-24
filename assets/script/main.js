@@ -1,3 +1,8 @@
+const src = {
+    ru: './assets/bio.md?ver=24-03-22-1',
+    en: './assets/bio_en.md'
+}
+
 let themeIndicator = document.querySelector(".theme-indicator"), 
     colorSheme, 
     colorShemeIndex = 0,
@@ -42,7 +47,7 @@ catch(e){
 
 let src
 let interval
-let url = langShemeIndex == 0? './assets/bio.md': './assets/bio_en.md'
+let url = langShemeIndex == 0? src.ru: src.en
 
 async function init(){
     src = ""
