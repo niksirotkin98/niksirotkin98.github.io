@@ -1,4 +1,4 @@
-const src = {
+const docs = {
     ru: './assets/bio.md?ver=24-03-22-1',
     en: './assets/bio_en.md'
 }
@@ -47,7 +47,7 @@ catch(e){
 
 let src
 let interval
-let url = langShemeIndex == 0? src.ru: src.en
+let url = langShemeIndex == 0? docs.ru: docs.en
 
 async function init(){
     src = ""

@@ -42,7 +42,7 @@ function ChangeTheme(colorsObj, index, dark = 0){
 }
 
 function ChangeLang(lang){
-    url = lang == 0? './assets/bio.md': './assets/bio_en.md'
+    url = lang == 0? docs.ru: docs.en
     saveLang(lang)
     clearInterval(interval)
     document.querySelector(".plug-holder").classList.remove("hidden")
