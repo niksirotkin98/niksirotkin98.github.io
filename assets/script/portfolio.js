@@ -165,7 +165,7 @@ function markdown(src, target){
         out = out.replace(/(\~{3})(.*?)(\~{3})/mg, "<del><ins>$2</ins></del>");
         out = out.replace(/(\~{2})(.*?)(\~{2})/mg, "<del>$2</del>");
         out = out.replace(/(\~{1})(.*?)(\~{1})/mg, "<ins>$2</ins>");
-        out = out.replace(/\/cnts:(.*?):(.*?)(?::(.*?)){0,1}\//gm, '<span class="cnts">$1 <a target="blank" href="$2" data-cnts-type="$1" data-cnts="true" data-href="$2" data-title="$3">^$2^</a></span>');
+        out = out.replace(/\/cnts:(.*?):(.*?)(?::(.*?)){0,1}\/$/gm, '<span class="cnts">$1 <a target="blank" href="$2" data-cnts-type="$1" data-cnts="true" data-href="$2" data-title="$3">^$2^</a></span>');
         out = out.replace(/(\^{2})(.*?)(\^{2})/mg, "<span style='color:var(--inactive-color);'>$2</span>");
         out = out.replace(/(\^{1})(.*?)(\^{1})/mg, "<span style='color:var(--main-color);'>$2</span>");
 
