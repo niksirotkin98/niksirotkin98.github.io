@@ -190,7 +190,7 @@ function markdown(src, target){
                     link.href = `skype:${link.dataset.href}?chat`
                     break
                 default:
-                    link.href = link.dataset.href
+                    link.href = "https://" + link.dataset.href
                     break
             }
         }
