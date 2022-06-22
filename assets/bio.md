@@ -58,5 +58,5 @@ _______
 
 /cnts:email:niksirotkin98@gmail.com/
 /cnts:telegram:goo4all/
-/cnts:instagram:goo4all/
+/cnts:instagram:nikita.sirotkin.left/
 /cnts:skype:niksirotkin98/
