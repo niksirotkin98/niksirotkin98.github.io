@@ -57,7 +57,7 @@ Native city - Vitebsk(Belarus). Finished one term at the university and moved on
 # Contacts
 
 /cnts:email:niksirotkin98@gmail.com/
-/cnts:telegram:goo4all/
+/cnts:telegram:nikita_sirotkin_left/
 /cnts:instagram:nikita.sirotkin.left/
 /cnts:linkedin:www.linkedin.com/in/niksirotkin98:niksirotkin98/
 /cnts:skype:niksirotkin98/
