@@ -1,6 +1,6 @@
 const docs = {
-    ru: './assets/bio.md?ver=24-03-22-1',
-    en: './assets/bio_en.md'
+    ru: './assets/bio.md?ver=02-04-23-1',
+    en: './assets/bio_en.md?ver=02-04-23-1'
 }
 
 let themeIndicator = document.querySelector(".theme-indicator"), 
