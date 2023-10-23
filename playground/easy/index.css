@@ -1,0 +1,79 @@
+:root{
+    --size: max(10vw, 10vh);
+}
+
+body{
+    background: white;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.card{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: calc(var(--size) * 2);
+    height: calc(var(--size) * 3);
+    background-color: rgb(116, 255, 255);
+}
+.ball{
+    --x: 0;
+    --y: 0;
+    --scale: 1;
+    position: fixed;
+    top: calc(50% - var(--y) * var(--size));
+    left:  calc(50% + var(--x) * var(--size));
+    transform: translate(-50%, -50%) scale(var(--scale));
+
+    width: calc(var(--size) * 0.5);
+    height: calc(var(--size) * 0.5);
+    background-color: rgb(124, 0, 207);
+    border-radius: 100%;
+}
+.log{
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-family: sans-serif;
+    font-size: 18pt;
+
+}
+.score{
+    position: fixed;
+    top: calc(50% + var(--size) * 2);
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 48pt;
+}
+.elapsed{
+    position: fixed;
+    top: calc(50% - var(--size) * 2);
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: lighter;
+    color: rgb(196, 196, 196);
+    font-size: 48pt;
+}
+.touch{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: max(100vw, 100vh);
+    height: max(100vw, 100vh);
+    opacity: 0.05;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.30) 50%, rgba(0, 0, 0, 0.00) 50%), linear-gradient(180deg, rgba(0, 0, 0, 0.30) 49.97%, rgba(0, 0, 0, 0.00) 50.02%), #D9D9D9;
+    /* background: linear-gradient(90deg, rgba(0, 0, 0, 0.30) 50.22%, rgba(0, 0, 0, 0.00) 50.23%), linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.67%, rgba(0, 0, 0, 0.30) 48.67%), #D9D9D9; */
+}
