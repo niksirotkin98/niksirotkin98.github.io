@@ -45,11 +45,11 @@ const vmult = (a, i) => [a[0] * i, a[1] * i]
 let card, ball, log, scoreRoot, elapsedRoot, touchRoot;
 let direction = [0,0]
 let speed = 0
-let acc = 3
+let acc = 4
 const accacc = 1.05
 let ballPos = [0,0]
 let ballScale = 1
-let elapsed = 15
+let elapsed = 5
 let score = 0
 let used = false
 const directions = [
@@ -68,6 +68,7 @@ let state = 0
     3 - player fail
 */
 let t = 0
+let at = 0
 
 const states = [
     (dt)=>{
@@ -124,7 +125,8 @@ const states = [
             }else{
                 ballScale = 0
                 state = 0
-                acc *= accacc
+                elapsed -= 5
+                // acc *= accacc
                 t = 0
             }
         }
@@ -139,6 +141,7 @@ const keyDown = ({keyCode}) =>{
                 if(spos(direction) == '0,1'){
                     state = 2
                     score+= 1
+                    elapsed += 5
                 }
                 used = true
                 break;
@@ -146,6 +149,7 @@ const keyDown = ({keyCode}) =>{
                 if(spos(direction) == '1,0'){
                     state = 2
                     score+= 1
+                    elapsed += 5
                 }
                 used = true
                 break;
@@ -153,6 +157,7 @@ const keyDown = ({keyCode}) =>{
                 if(spos(direction) == '0,-1'){
                     state = 2
                     score+= 1
+                    elapsed += 5
                 }
                 used = true
                 break;
@@ -160,6 +165,7 @@ const keyDown = ({keyCode}) =>{
                 if(spos(direction) == '-1,0'){
                     state = 2
                     score+= 1
+                    elapsed += 5
                 }
                 used = true
                 break;
@@ -179,9 +185,10 @@ const update = (dt) => {
     if(elapsed > 0){
         states[state](dt)
         elapsed -= dt
+        at += dt
         elapsedRoot.innerHTML = `${Math.round(elapsed*10)/10}`
     } else {
-        elapsedRoot.innerHTML = `Game ended!`
+        elapsedRoot.innerHTML = `Time: ${Math.round(at)}`
     }
     scoreRoot.innerHTML = `${score}`
     if(!logMessage[2]) logMessage[2] = ''
