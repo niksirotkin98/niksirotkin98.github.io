@@ -96,7 +96,7 @@ const states = [
         if(!logMessage[0]) logMessage[0] = ''
         logMessage[0] = `x: ${ballPos[0]}\ty: ${ballPos[1]}`
 
-        if(Math.abs(ballPos[0]) > 1 || Math.abs(ballPos[1]) > 1.5){
+        if(Math.abs(ballPos[0]) > 2 || Math.abs(ballPos[1]) > 2){
             state = 3
             t = 0
         }
@@ -125,7 +125,7 @@ const states = [
             }else{
                 ballScale = 0
                 state = 0
-                elapsed -= 5
+                elapsed -= 2.5
                 // acc *= accacc
                 t = 0
             }
@@ -135,7 +135,9 @@ const states = [
 
 // 87 68 83 65
 const keyDown = ({keyCode}) =>{
-    if(state == 1 && !used){
+    if(state == 1 
+      //&& !used
+      ){
         switch(keyCode){
             case 87: 
                 if(spos(direction) == '0,1'){
