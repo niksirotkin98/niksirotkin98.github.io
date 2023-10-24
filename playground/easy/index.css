@@ -17,8 +17,8 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: calc(var(--size) * 2);
-    height: calc(var(--size) * 3);
+    width: calc(var(--size) * 4);
+    height: calc(var(--size) * 4);
     background-color: rgb(116, 255, 255);
 }
 .ball{
