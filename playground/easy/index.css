@@ -20,7 +20,7 @@ body{
     width: calc(var(--size) * 4);
     height: calc(var(--size) * 4);
     background-color: white;
-    border: 2px dash #ddd;
+    border: 2px dashed #ddd;
 }
 .ball{
     --x: 0;
