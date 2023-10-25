@@ -53,7 +53,7 @@ highscoreTime = nanzero(highscoreTime)
 let direction = [0,0]
 let speed = 0
 let acc = 4
-const accacc = 1.05
+const accacc = 1.025
 let ballPos = [0,0]
 let ballScale = 1
 let elapsed = 5
@@ -193,12 +193,12 @@ const addBall = (lifetime, diameter) =>{
 let ballsPars = {
     t: 0,
     dif: 2,
-    accDif: 0.95,
-    diam: 0.9,
+    accDif: 0.98,
+    diam: 0.8,
     state: 0,
     used: 0,
     count: 2,
-    accCount: 0.1,
+    accCount: 0.06,
 }
 
 const statesBalls = [
