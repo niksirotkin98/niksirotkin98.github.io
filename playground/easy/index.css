@@ -54,7 +54,7 @@ body{
     text-align: center;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 36pt;
+    font-size: 32pt;
 }
 .highscore{
     position: fixed;
@@ -80,7 +80,7 @@ body{
     font-family: sans-serif;
     font-weight: lighter;
     color: rgb(150, 150, 150);
-    font-size: 36pt;
+    font-size: 32pt;
 }
 .touch{
     position: fixed;
